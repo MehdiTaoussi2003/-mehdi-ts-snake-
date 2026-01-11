@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" href="../public/mtsite.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+    <title>MEHDI TS SNAKE - Professional Snake Game</title>
+    <link rel="stylesheet" href="style-professional.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="logo-container">
+            <img src="../public/mtsite.png" alt="Logo" class="loading-logo" onerror="this.style.display='none'">
+            <h1 class="loading-title">MEHDI TS SNAKE</h1>
+        </div>
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading...</p>
+    </div>
+
+    <div class="container">
+        <!-- Game Header with Logo -->
+        <div class="game-header">
+            <div class="header-top">
+                <img src="../public/mtsite.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+                <h1 class="game-title">MEHDI TS SNAKE</h1>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <span class="label">Score</span>
+                    <span id="score" class="value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Level</span>
+                    <span id="level" class="value">1</span>
+                </div>
+                <div class="stat">
+                    <span class="label">High Score</span>
+                    <span id="highScore" class="value">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Controls Bar -->
+        <div class="game-controls-bar">
+            <button id="pauseBtn" class="icon-btn" title="Pause">
+                <span class="pause-icon">⏸</span>
+                <span class="play-icon hidden">▶</span>
+            </button>
+            <button id="soundBtn" class="icon-btn" title="Sound">
+                <span class="sound-on">🔊</span>
+                <span class="sound-off hidden">🔇</span>
+            </button>
+            <button id="menuBtn" class="icon-btn" title="Menu">☰</button>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Pause Screen -->
+        <div id="pauseScreen" class="pause-screen hidden">
+            <h2>⏸ Paused</h2>
+            <p>Press Space or tap Resume to continue</p>
+            <button id="resumeBtn" class="btn btn-primary">Resume</button>
+            <button id="quitBtn" class="btn btn-secondary">Quit to Menu</button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameOver" class="game-over hidden">
+            <div class="game-over-content">
+                <h2>Game Over!</h2>
+                <div class="final-stats">
+                    <p class="final-score">Score: <span id="finalScore">0</span></p>
+                    <p class="final-level">Level: <span id="finalLevel">1</span></p>
+                    <p id="newHighScore" class="new-high-score hidden">🏆 New High Score!</p>
+                </div>
+                <div class="game-over-buttons">
+                    <button id="restartBtn" class="btn btn-primary">Play Again</button>
+                    <button id="menuBtnGameOver" class="btn btn-secondary">Main Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Screen / Main Menu -->
+        <div id="startScreen" class="start-screen">
+            <div class="menu-content">
+                <img src="../public/mtsite.png" alt="Logo" class="menu-logo" onerror="this.style.display='none'">
+                <h1 class="menu-title">MEHDI TS SNAKE</h1>
+                <p class="menu-subtitle">Professional Edition</p>
+                
+                <div class="difficulty-selector">
+                    <h3>Select Difficulty</h3>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn active" data-difficulty="easy">
+                            <span class="diff-icon">😊</span>
+                            <span class="diff-name">Easy</span>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="medium">
+                            <span class="diff-icon">😐</span>
+                            <span class="diff-name">Medium</span>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="hard">
+                            <span class="diff-icon">😈</span>
+                            <span class="diff-name">Hard</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="startBtn" class="btn btn-primary btn-large">Start Game</button>
+                
+                <div class="menu-instructions">
+                    <h4>How to Play</h4>
+                    <ul>
+                        <li>🐍 Control the snake with arrow keys or buttons</li>
+                        <li>🍎 Eat food to grow and gain points</li>
+                        <li>⚡ Speed increases as you level up</li>
+                        <li>💀 Don't hit walls or yourself!</li>
+                        <li>⏸ Press Space to pause</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Touch Controls -->
+        <div class="controls" id="touchControls">
+            <div class="control-row">
+                <button class="control-btn" data-direction="up" aria-label="Up">
+                    <span>↑</span>
+                </button>
+            </div>
+            <div class="control-row">
+                <button class="control-btn" data-direction="left" aria-label="Left">
+                    <span>←</span>
+                </button>
+                <button class="control-btn" data-direction="down" aria-label="Down">
+                    <span>↓</span>
+                </button>
+                <button class="control-btn" data-direction="right" aria-label="Right">
+                    <span>→</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="game-footer">
+            <p>© 2026 MEHDI TS - Professional Snake Game</p>
+        </div>
+    </div>
+
+    <script src="game-professional.js"></script>
+</body>
+</html>
